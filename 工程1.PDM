@@ -1,0 +1,103 @@
+[Root]
+Most Recent Package=标准安装软件包 1
+
+
+[Package|标准安装软件包 1|Root]
+SubWizProgID=PDWizard.SetupPkgSubWiz
+BuildFolder=E:\workspace\github\numberFilter\包
+
+[Package|标准安装软件包 1|Configure DAO ISAMs]
+Applicable=No
+
+[Package|标准安装软件包 1|Configure DAO ODBC]
+JetWorkspace=
+ODBCDirect=
+
+[Package|标准安装软件包 1|Files Found]
+
+[Package|标准安装软件包 1|Files Released]
+3=
+
+[Package|标准安装软件包 1|Missing Dependency Information]
+C:\Windows\SysWOW64\shell32.dll=
+C:\Windows\SysWOW64\MSSTDFMT.DLL=
+
+[Package|标准安装软件包 1|Out-of-Date Dependency Information]
+C:\Windows\SysWOW64\Comdlg32.ocx=
+
+[Package|标准安装软件包 1|Files Added]
+
+[Package|标准安装软件包 1|Files Removed]
+e:\workspace\github\numberfilter\工程1.exe=
+
+[Package|标准安装软件包 1|Files In Project]
+E:\workspace\github\numberFilter\工程1.exe=No
+C:\Windows\System32\msvbvm60.dll=Yes
+C:\Windows\System32\oleaut32.dll=Yes
+C:\Windows\System32\olepro32.dll=Yes
+C:\Windows\System32\asycfilt.dll=Yes
+C:\Windows\System32\stdole2.tlb=Yes
+D:\Program Files (x86)\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=Yes
+C:\Windows\System32\vb6chs.dll=Yes
+C:\Windows\SysWOW64\MSSTDFMT.DLL=Yes
+C:\Windows\SysWOW64\shell32.dll=Yes
+C:\Windows\SysWOW64\Comdlg32.ocx=Yes
+C:\Windows\SysWOW64\Cmdlgchs.dll=Yes
+D:\Program Files (x86)\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=Yes
+D:\Program Files (x86)\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=Yes
+C:\Windows\System32\VB6STKIT.DLL=Yes
+D:\Program Files (x86)\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=Yes
+
+[Package|标准安装软件包 1|Configure Registry Files]
+Applicable=No
+
+[Package|标准安装软件包 1|Configure Remote Servers]
+Applicable=No
+
+[Package|标准安装软件包 1|Install Locations]
+E:\workspace\github\numberFilter\工程1.exe=$(AppPath)
+C:\Windows\System32\msvbvm60.dll=$(WinSysPathSysFile)
+C:\Windows\System32\oleaut32.dll=$(WinSysPathSysFile)
+C:\Windows\System32\olepro32.dll=$(WinSysPathSysFile)
+C:\Windows\System32\asycfilt.dll=$(WinSysPathSysFile)
+C:\Windows\System32\stdole2.tlb=$(WinSysPathSysFile)
+D:\Program Files (x86)\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=$(WinSysPathSysFile)
+C:\Windows\System32\vb6chs.dll=$(WinSysPath)
+C:\Windows\SysWOW64\MSSTDFMT.DLL=$(WinSysPath)
+C:\Windows\SysWOW64\shell32.dll=$(WinSysPath)
+C:\Windows\SysWOW64\Comdlg32.ocx=$(WinSysPath)
+C:\Windows\SysWOW64\Cmdlgchs.dll=$(WinSysPath)
+D:\Program Files (x86)\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=$(AppPath)
+D:\Program Files (x86)\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=$(WinPath)
+C:\Windows\System32\VB6STKIT.DLL=$(WinSysPathSysFile)
+D:\Program Files (x86)\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=$(WinPath)
+
+[Package|标准安装软件包 1|Configure Shared Files]
+Applicable=No
+E:\workspace\github\numberFilter\工程1.exe=Yes
+
+[Package|标准安装软件包 1|Distribution]
+Type=single
+Size=1.44 MB
+Title=号码筛选
+
+[Package|标准安装软件包 1|Package]
+PackageFolder=E:\workspace\github\numberFilter\包
+ProjectFolder=E:\workspace\github\numberFilter
+ServerSideCab=
+File1=E:\workspace\github\numberFilter\包\setup.exe
+File2=E:\workspace\github\numberFilter\包\Setup.Lst
+File3=E:\workspace\github\numberFilter\包\工程1.CAB
+Handler1=PDWizard.FolderDplySubWiz
+Handler2=PDWizard.WebPostDplySubWiz
+
+[Package|标准安装软件包 1|IconGroups]
+Group0=号码筛选
+PrivateGroup0=True
+Parent0=$(Programs)
+
+[Package|标准安装软件包 1|号码筛选]
+Icon1=工程1.exe
+Title1=号码筛选
+StartIn1=$(AppPath)
+Key1=Icon1
