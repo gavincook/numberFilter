@@ -122,6 +122,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Dim fileSelected As Boolean
 Dim numberList() As String
+Dim matchedNumberList() As String
+Dim notMatchedNumberList() As String
 Dim ruleReg As RegExp
 Dim colMatches   As MatchCollection
 Dim m As Match
@@ -138,7 +140,9 @@ Private Sub browse_Click()
  Do While Not EOF(1)
    Line Input #1, a '读整行的数据
    If Trim(a) <> "" Then
-    sourceList.AddItem a
+    If i < 1000 Then
+      sourceList.AddItem a
+    End If
     If i >= UBound(numberList) Then
       ReDim Preserve numberList(UBound(numberList) + 1000)
     End If
@@ -158,6 +162,8 @@ Private Sub Command1_Click()
    Dim rulesArray(100) As String
    Dim ruleNumber As String
    Dim ruleName As String
+   ReDim matchedNumberList(1000)
+   ReDim notMatchedNumberList(1000)
          '读取规则
           
           If Dir(Environ("APPDATA") & "\numberFilter.txt") <> "" Then
@@ -173,6 +179,8 @@ Private Sub Command1_Click()
           Close #1
           
        '解析规则
+        i = 0
+        j = 0
        For rulePosition = 0 To 100
         If rulesArray(rulePosition) <> "" Then
         
@@ -181,21 +189,39 @@ Private Sub Command1_Click()
              ruleNumber = m.SubMatches(0)
              ruleName = m.SubMatches(1)
             Next
-            
+           
             For position = 0 To UBound(numberList)
                  If Left(numberList(position), 7) = ruleNumber Then
-                  matchedList.AddItem (numberList(position) & "(" & ruleName & ")")
+                  If i < 1000 Then
+                    matchedList.AddItem (numberList(position) & "(" & ruleName & ")")
+                  End If
+                  
+                  matchedNumberList(i) = (numberList(position) & "(" & ruleName & ")")
+                  
+                  If i >= UBound(matchedNumberList) Then
+                    ReDim Preserve matchedNumberList(UBound(matchedNumberList) + 1000)
+                  End If
+                  i = i + 1
+                  
                    numberList(position) = ""
-               
                  End If
+                 
             Next
         End If
        Next
        
        For position = 0 To UBound(numberList)
          If numberList(position) <> "" Then
-           notMatchedList.AddItem (numberList(position))
-         End If
+           If j < 1000 Then
+              notMatchedList.AddItem (numberList(position))
+           End If
+            notMatchedNumberList(j) = numberList(position)
+              If j >= UBound(notMatchedNumberList) Then
+                ReDim Preserve notMatchedNumberList(UBound(notMatchedNumberList) + 1000)
+              End If
+            j = j + 1
+            
+          End If
        Next
        
        End If
@@ -212,11 +238,13 @@ Private Sub exportMatch_Click()
  fileBrowse.ShowSave
  
   Open addSufix(fileBrowse.fileName) For Output As #1  ' 打开输出文件。
-   For i = 0 To matchedList.ListCount
-        If matchedList.List(i) <> "" Then
-             Print #1, matchedList.List(i)
+  
+   For Each phoneNumber In matchedNumberList
+        If phoneNumber <> "" Then
+             Print #1, phoneNumber
        End If
-    Next i
+    Next
+    
   Close #1
   
 End Sub
@@ -226,11 +254,13 @@ Private Sub exportNotMatch_Click()
  fileBrowse.ShowSave
  
   Open addSufix(fileBrowse.fileName) For Output As #1  ' 打开输出文件。
-   For i = 0 To notMatchedList.ListCount
-        If notMatchedList.List(i) <> "" Then
-             Print #1, notMatchedList.List(i)
+   
+    For Each phoneNumber In notMatchedNumberList
+        If phoneNumber <> "" Then
+             Print #1, phoneNumber
        End If
-    Next i
+    Next
+   
   Close #1
 End Sub
 

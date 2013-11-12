@@ -245,7 +245,7 @@ End If
 End Sub
 
 Private Sub ruleList_Click()
- Dim reg As RegExp
+  Dim reg As RegExp
   Dim colMatches   As MatchCollection
   Dim m As Match
  Set reg = New RegExp
