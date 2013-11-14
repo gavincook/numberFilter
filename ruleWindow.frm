@@ -1,14 +1,22 @@
 VERSION 5.00
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "Comdlg32.ocx"
 Begin VB.Form ruleWindow 
    Caption         =   "规则管理"
    ClientHeight    =   3885
    ClientLeft      =   8430
-   ClientTop       =   5070
+   ClientTop       =   5370
    ClientWidth     =   6900
    Icon            =   "ruleWindow.frx":0000
    LinkTopic       =   "Form1"
    ScaleHeight     =   3885
    ScaleWidth      =   6900
+   Begin MSComDlg.CommonDialog ruleFileDialog 
+      Left            =   480
+      Top             =   3600
+      _ExtentX        =   847
+      _ExtentY        =   847
+      _Version        =   393216
+   End
    Begin VB.CommandButton Command3 
       Caption         =   "删除规则"
       BeginProperty Font 
@@ -153,6 +161,17 @@ Begin VB.Form ruleWindow
       Top             =   120
       Width           =   735
    End
+   Begin VB.Menu file 
+      Caption         =   "文件"
+      Begin VB.Menu import 
+         Caption         =   "规则导入"
+         Shortcut        =   {F2}
+      End
+      Begin VB.Menu export 
+         Caption         =   "规则导出"
+         Shortcut        =   {F3}
+      End
+   End
 End
 Attribute VB_Name = "ruleWindow"
 Attribute VB_GlobalNameSpace = False
@@ -224,24 +243,77 @@ Private Sub Command3_Click()
     Close #1
 End Sub
 
+Private Sub export_Click()
+   ruleFileDialog.Filter = "*.txt"
+   ruleFileDialog.ShowSave
+    If ruleFileDialog.fileName <> "" Then
+
+       Open numberFilter.addSufix(ruleFileDialog.fileName) For Output As #1
+       Open Environ("APPDATA") & "\numberFilter.txt" For Input As #2   ' 打开输入文件。
+       Do While Not EOF(2)
+         Line Input #2, a '读整行的数据
+         If Trim(a) <> "" Then
+          Print #1, a
+         End If
+       Loop
+       
+       Close #2
+       Close #1
+    MsgBox "导出成功，文件路径为 " & numberFilter.addSufix(ruleFileDialog.fileName)
+    End If
+End Sub
+
 Private Sub Form_Load()
   Set ruleReg = New RegExp
   ruleReg.Pattern = "^\d{7}$"
 
   If Dir(Environ("APPDATA") & "\numberFilter.txt") <> "" Then
-  Open Environ("APPDATA") & "\numberFilter.txt" For Input As #1
-  i = 0
-  Do While Not EOF(1)
-    Line Input #1, a '读整行的数据
-    If Trim(a) <> "" Then
-     ruleList.AddItem a
-     rulesArray(i) = a
-     i = i + 1
-     End If
-  Loop
-  Close #1
-End If
+    Open Environ("APPDATA") & "\numberFilter.txt" For Input As #1
+    i = 0
+    Do While Not EOF(1)
+      Line Input #1, a '读整行的数据
+      If Trim(a) <> "" Then
+       ruleList.AddItem a
+       rulesArray(i) = a
+       i = i + 1
+       End If
+    Loop
+    Close #1
+   End If
 
+End Sub
+
+Private Sub import_Click()
+    ruleFileDialog.ShowOpen
+    If ruleFileDialog.fileName <> "" Then
+       '开始处理数据
+       Open ruleFileDialog.fileName For Input As #1
+       Open Environ("APPDATA") & "\numberFilter.txt" For Output As #2  ' 打开输出文件。
+       Do While Not EOF(1)
+         Line Input #1, a '读整行的数据
+         If Trim(a) <> "" Then
+          Print #2, a
+         End If
+       Loop
+       
+       Close #2
+       Close #1
+       ruleList.Clear
+         If Dir(Environ("APPDATA") & "\numberFilter.txt") <> "" Then
+            Open Environ("APPDATA") & "\numberFilter.txt" For Input As #3
+            i = 0
+            Do While Not EOF(3)
+              Line Input #3, a '读整行的数据
+              If Trim(a) <> "" Then
+               ruleList.AddItem a
+               rulesArray(i) = a
+               i = i + 1
+               End If
+            Loop
+            Close #3
+        End If
+        MsgBox "规则导入成功"
+    End If
 End Sub
 
 Private Sub ruleList_Click()

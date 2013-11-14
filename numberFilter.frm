@@ -130,31 +130,34 @@ Dim m As Match
 
 Private Sub browse_Click()
  fileBrowse.ShowOpen
- fileName.Caption = fileBrowse.fileName
- fileSelected = True
- '开始处理数据
- Open fileBrowse.fileName For Input As #1
- i = 0
- ReDim numberList(1000)
- sourceList.Clear
- Do While Not EOF(1)
-   Line Input #1, a '读整行的数据
-   If Trim(a) <> "" Then
-    If i < 1000 Then
-      sourceList.AddItem a
-    End If
-    If i >= UBound(numberList) Then
-      ReDim Preserve numberList(UBound(numberList) + 1000)
-    End If
-    numberList(i) = a
-    i = i + 1
-   End If
- Loop
- Close #1
+ If fileBrowse.fileName <> "" Then
+    fileName.Caption = fileBrowse.fileName
+    fileSelected = True
+    '开始处理数据
+    Open fileBrowse.fileName For Input As #1
+    i = 0
+    ReDim numberList(1000)
+    sourceList.Clear
+    Do While Not EOF(1)
+      Line Input #1, a '读整行的数据
+      If Trim(a) <> "" Then
+       If i < 1000 Then
+         sourceList.AddItem a
+       End If
+       If i >= UBound(numberList) Then
+         ReDim Preserve numberList(UBound(numberList) + 1000)
+       End If
+       numberList(i) = a
+       i = i + 1
+      End If
+    Loop
+    Close #1
+ End If
 End Sub
 
 Private Sub Command1_Click()
-  
+  matchedList.Clear
+  notMatchedList.Clear
   If fileSelected = False Then
      MsgBox "请选择文件"
   Else
@@ -236,7 +239,7 @@ End Sub
 Private Sub exportMatch_Click()
  fileBrowse.Filter = "号码导出文件"
  fileBrowse.ShowSave
- 
+ If fileBrowse.fileName <> "" Then
   Open addSufix(fileBrowse.fileName) For Output As #1  ' 打开输出文件。
   
    For Each phoneNumber In matchedNumberList
@@ -246,25 +249,33 @@ Private Sub exportMatch_Click()
     Next
     
   Close #1
-  
+  MsgBox "数据导出成功，文件路径为 " & addSufix(fileBrowse.fileName)
+ End If
 End Sub
 
 Private Sub exportNotMatch_Click()
    fileBrowse.Filter = "号码导出文件"
  fileBrowse.ShowSave
- 
-  Open addSufix(fileBrowse.fileName) For Output As #1  ' 打开输出文件。
-   
-    For Each phoneNumber In notMatchedNumberList
-        If phoneNumber <> "" Then
-             Print #1, phoneNumber
-       End If
-    Next
-   
-  Close #1
+ If fileBrowse.fileName <> "" Then
+    Open addSufix(fileBrowse.fileName) For Output As #1  ' 打开输出文件。
+     
+      For Each phoneNumber In notMatchedNumberList
+          If phoneNumber <> "" Then
+               Print #1, phoneNumber
+         End If
+      Next
+     
+    Close #1
+     MsgBox "数据导出成功，文件路径为 " & addSufix(fileBrowse.fileName)
+ End If
 End Sub
 
 Private Sub Form_Load()
+If DateDiff("d", Now(), "2013-12-31") < 0 Then
+MsgBox "12-31"
+End
+End If
+
 fileSelected = False
 Set ruleReg = New RegExp
 ruleReg.Pattern = "^(\d{7})\((.*)\)$"
