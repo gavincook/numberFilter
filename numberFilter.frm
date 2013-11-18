@@ -2,29 +2,49 @@ VERSION 5.00
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "Comdlg32.ocx"
 Begin VB.Form numberFilter 
    Caption         =   "ºÅÂëÉ¸Ñ¡Èí¼þ"
-   ClientHeight    =   3990
+   ClientHeight    =   10200
    ClientLeft      =   120
    ClientTop       =   450
-   ClientWidth     =   10005
+   ClientWidth     =   15015
    Icon            =   "numberFilter.frx":0000
    LinkTopic       =   "Form1"
-   ScaleHeight     =   3990
-   ScaleWidth      =   10005
+   ScaleHeight     =   10200
+   ScaleWidth      =   15015
    StartUpPosition =   2  'ÆÁÄ»ÖÐÐÄ
+   WhatsThisButton =   -1  'True
+   WhatsThisHelp   =   -1  'True
    Begin VB.CommandButton exportNotMatch 
-      Caption         =   "µ¼  ³ö"
-      Height          =   375
-      Left            =   6840
+      Caption         =   "µ¼   ³ö"
+      BeginProperty Font 
+         Name            =   "Î¢ÈíÑÅºÚ"
+         Size            =   14.25
+         Charset         =   134
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   615
+      Left            =   10080
       TabIndex        =   8
-      Top             =   3480
+      Top             =   9480
       Width           =   3015
    End
    Begin VB.CommandButton exportMatch 
-      Caption         =   "µ¼  ³ö"
-      Height          =   375
-      Left            =   3480
+      Caption         =   "µ¼   ³ö"
+      BeginProperty Font 
+         Name            =   "Î¢ÈíÑÅºÚ"
+         Size            =   14.25
+         Charset         =   134
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   615
+      Left            =   5640
       TabIndex        =   7
-      Top             =   3480
+      Top             =   9480
       Width           =   3015
    End
    Begin VB.ListBox notMatchedList 
@@ -37,11 +57,11 @@ Begin VB.Form numberFilter
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   2580
-      Left            =   6840
+      Height          =   8880
+      Left            =   9360
       TabIndex        =   5
-      Top             =   720
-      Width           =   3015
+      Top             =   120
+      Width           =   4575
    End
    Begin VB.ListBox matchedList 
       BeginProperty Font 
@@ -53,11 +73,11 @@ Begin VB.Form numberFilter
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   2580
-      Left            =   3480
+      Height          =   8880
+      Left            =   4560
       TabIndex        =   4
-      Top             =   720
-      Width           =   3015
+      Top             =   120
+      Width           =   4575
    End
    Begin VB.ListBox sourceList 
       BeginProperty Font 
@@ -69,11 +89,11 @@ Begin VB.Form numberFilter
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   2580
+      Height          =   8880
       Left            =   120
       TabIndex        =   2
-      Top             =   720
-      Width           =   3015
+      Top             =   120
+      Width           =   3855
    End
    Begin MSComDlg.CommonDialog fileBrowse 
       Left            =   2040
@@ -83,27 +103,54 @@ Begin VB.Form numberFilter
       _Version        =   393216
    End
    Begin VB.CommandButton browse 
-      Caption         =   "ä¯ÀÀ"
-      Height          =   375
-      Left            =   6480
+      Caption         =   "µ¼Èë"
+      BeginProperty Font 
+         Name            =   "Î¢ÈíÑÅºÚ"
+         Size            =   14.25
+         Charset         =   134
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   1335
+      Left            =   14280
       TabIndex        =   0
-      Top             =   120
-      Width           =   1575
+      Top             =   2640
+      Width           =   615
    End
-   Begin VB.CommandButton Command2 
+   Begin VB.CommandButton rule 
       Caption         =   "¹æÔò"
-      Height          =   375
-      Left            =   8400
+      BeginProperty Font 
+         Name            =   "Î¢ÈíÑÅºÚ"
+         Size            =   14.25
+         Charset         =   134
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   1215
+      Left            =   14280
       TabIndex        =   1
-      Top             =   120
-      Width           =   1335
+      Top             =   4800
+      Width           =   615
    End
    Begin VB.CommandButton Command1 
-      Caption         =   "É¸Ñ¡"
-      Height          =   375
-      Left            =   120
+      Caption         =   "É¸   Ñ¡"
+      BeginProperty Font 
+         Name            =   "Î¢ÈíÑÅºÚ"
+         Size            =   14.25
+         Charset         =   134
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   615
+      Left            =   240
       TabIndex        =   3
-      Top             =   3480
+      Top             =   9480
       Width           =   3015
    End
    Begin VB.Label fileName 
@@ -112,6 +159,7 @@ Begin VB.Form numberFilter
       Left            =   120
       TabIndex        =   6
       Top             =   120
+      Visible         =   0   'False
       Width           =   5175
    End
 End
@@ -231,9 +279,6 @@ Private Sub Command1_Click()
   End If
 End Sub
 
-Private Sub Command2_Click()
-  ruleWindow.Show (1)
-End Sub
 
 
 Private Sub exportMatch_Click()
@@ -287,3 +332,53 @@ Function addSufix(fileName) As String
   End If
   addSufix = fileName
 End Function
+
+Private Sub Form_Resize()
+   Dim baseWidth As Double
+   Dim baseHeight As Double
+   
+   If Me.Height - 1500 > 0 Then
+     baseHeight = Me.Height - 1500
+   Else
+     baseHeight = 0
+   End If
+   
+   baseWidth = (Me.Width - 1800) / 3
+   sourceList.Width = baseWidth
+   sourceList.Top = 100
+   sourceList.Left = 100
+   sourceList.Height = baseHeight
+   
+   matchedList.Width = baseWidth
+   matchedList.Height = baseHeight
+   matchedList.Top = 100
+   matchedList.Left = baseWidth + 300
+   
+   
+   notMatchedList.Width = baseWidth
+   notMatchedList.Top = 100
+   notMatchedList.Left = baseWidth * 2 + 500
+   notMatchedList.Height = baseHeight
+   
+   browse.Top = Me.Height / 2 - 1400
+   browse.Left = baseWidth * 3 + 800
+   
+   rule.Top = Me.Height / 2 + 100
+   rule.Left = baseWidth * 3 + 800
+   
+   Command1.Top = baseHeight + 200
+   Command1.Left = 100
+   Command1.Width = baseWidth
+    
+   exportMatch.Top = baseHeight + 200
+   exportMatch.Left = baseWidth + 300
+   exportMatch.Width = baseWidth
+    
+   exportNotMatch.Top = baseHeight + 200
+   exportNotMatch.Left = baseWidth * 2 + 500
+   exportNotMatch.Width = baseWidth
+End Sub
+
+Private Sub rule_Click()
+  ruleWindow.Show (1)
+End Sub
