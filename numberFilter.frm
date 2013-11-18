@@ -177,6 +177,7 @@ Dim colMatches   As MatchCollection
 Dim m As Match
 
 Private Sub browse_Click()
+ fileBrowse.Filter = "号码导入文件|*.txt"
  fileBrowse.ShowOpen
  If fileBrowse.fileName <> "" Then
     fileName.Caption = fileBrowse.fileName
@@ -244,10 +245,10 @@ Private Sub Command1_Click()
             For position = 0 To UBound(numberList)
                  If Left(numberList(position), 7) = ruleNumber Then
                   If i < 1000 Then
-                    matchedList.AddItem (numberList(position) & "(" & ruleName & ")")
+                    matchedList.AddItem (numberList(position) & "  " & ruleName)
                   End If
                   
-                  matchedNumberList(i) = (numberList(position) & "(" & ruleName & ")")
+                  matchedNumberList(i) = (numberList(position) & "  " & ruleName)
                   
                   If i >= UBound(matchedNumberList) Then
                     ReDim Preserve matchedNumberList(UBound(matchedNumberList) + 1000)
@@ -323,7 +324,7 @@ End If
 
 fileSelected = False
 Set ruleReg = New RegExp
-ruleReg.Pattern = "^(\d{7})\((.*)\)$"
+ruleReg.Pattern = "^(\d{7})\s*(.*)$"
 End Sub
 
 Function addSufix(fileName) As String
