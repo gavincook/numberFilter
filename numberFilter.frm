@@ -1,6 +1,7 @@
 VERSION 5.00
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "Comdlg32.ocx"
 Begin VB.Form numberFilter 
+   BackColor       =   &H00E0E0E0&
    Caption         =   "ºÅÂëÉ¸Ñ¡Èí¼þ"
    ClientHeight    =   10200
    ClientLeft      =   120
@@ -16,7 +17,7 @@ Begin VB.Form numberFilter
    Begin VB.CommandButton exportNotMatch 
       Caption         =   "µ¼   ³ö"
       BeginProperty Font 
-         Name            =   "Î¢ÈíÑÅºÚ"
+         Name            =   "ËÎÌå"
          Size            =   14.25
          Charset         =   134
          Weight          =   400
@@ -33,7 +34,7 @@ Begin VB.Form numberFilter
    Begin VB.CommandButton exportMatch 
       Caption         =   "µ¼   ³ö"
       BeginProperty Font 
-         Name            =   "Î¢ÈíÑÅºÚ"
+         Name            =   "ËÎÌå"
          Size            =   14.25
          Charset         =   134
          Weight          =   400
@@ -48,8 +49,9 @@ Begin VB.Form numberFilter
       Width           =   3015
    End
    Begin VB.ListBox notMatchedList 
+      BackColor       =   &H00C0FFFF&
       BeginProperty Font 
-         Name            =   "Î¢ÈíÑÅºÚ"
+         Name            =   "ËÎÌå"
          Size            =   12
          Charset         =   134
          Weight          =   400
@@ -57,15 +59,16 @@ Begin VB.Form numberFilter
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   8880
+      Height          =   8700
       Left            =   9360
       TabIndex        =   5
       Top             =   120
       Width           =   4575
    End
    Begin VB.ListBox matchedList 
+      BackColor       =   &H00C0FFC0&
       BeginProperty Font 
-         Name            =   "Î¢ÈíÑÅºÚ"
+         Name            =   "ËÎÌå"
          Size            =   12
          Charset         =   134
          Weight          =   400
@@ -73,15 +76,16 @@ Begin VB.Form numberFilter
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   8880
+      Height          =   8700
       Left            =   4560
       TabIndex        =   4
       Top             =   120
       Width           =   4575
    End
    Begin VB.ListBox sourceList 
+      BackColor       =   &H00FFFFC0&
       BeginProperty Font 
-         Name            =   "Î¢ÈíÑÅºÚ"
+         Name            =   "ËÎÌå"
          Size            =   12
          Charset         =   134
          Weight          =   400
@@ -89,7 +93,7 @@ Begin VB.Form numberFilter
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   8880
+      Height          =   8700
       Left            =   120
       TabIndex        =   2
       Top             =   120
@@ -105,7 +109,7 @@ Begin VB.Form numberFilter
    Begin VB.CommandButton browse 
       Caption         =   "µ¼Èë"
       BeginProperty Font 
-         Name            =   "Î¢ÈíÑÅºÚ"
+         Name            =   "ËÎÌå"
          Size            =   14.25
          Charset         =   134
          Weight          =   400
@@ -122,7 +126,7 @@ Begin VB.Form numberFilter
    Begin VB.CommandButton rule 
       Caption         =   "¹æÔò"
       BeginProperty Font 
-         Name            =   "Î¢ÈíÑÅºÚ"
+         Name            =   "ËÎÌå"
          Size            =   14.25
          Charset         =   134
          Weight          =   400
@@ -139,7 +143,7 @@ Begin VB.Form numberFilter
    Begin VB.CommandButton Command1 
       Caption         =   "É¸   Ñ¡"
       BeginProperty Font 
-         Name            =   "Î¢ÈíÑÅºÚ"
+         Name            =   "ËÎÌå"
          Size            =   14.25
          Charset         =   134
          Weight          =   400
@@ -241,7 +245,7 @@ Private Sub Command1_Click()
              ruleNumber = m.SubMatches(0)
              ruleName = m.SubMatches(1)
             Next
-           
+
             For position = 0 To UBound(numberList)
                  If Left(numberList(position), 7) = ruleNumber Then
                   If i < 1000 Then

@@ -16,7 +16,7 @@ Begin VB.Form ruleWindow
    Begin VB.CommandButton clearRule 
       Caption         =   "规则清空"
       BeginProperty Font 
-         Name            =   "微软雅黑"
+         Name            =   "宋体"
          Size            =   10.5
          Charset         =   134
          Weight          =   400
@@ -33,7 +33,7 @@ Begin VB.Form ruleWindow
    Begin VB.CommandButton exportRule 
       Caption         =   "规则导出"
       BeginProperty Font 
-         Name            =   "微软雅黑"
+         Name            =   "宋体"
          Size            =   10.5
          Charset         =   134
          Weight          =   400
@@ -49,15 +49,6 @@ Begin VB.Form ruleWindow
    End
    Begin VB.CommandButton importRule 
       Caption         =   "规则导入"
-      BeginProperty Font 
-         Name            =   "微软雅黑"
-         Size            =   9
-         Charset         =   134
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   375
       Left            =   4080
       TabIndex        =   8
@@ -74,7 +65,7 @@ Begin VB.Form ruleWindow
    Begin VB.CommandButton Command3 
       Caption         =   "删除规则"
       BeginProperty Font 
-         Name            =   "微软雅黑"
+         Name            =   "宋体"
          Size            =   10.5
          Charset         =   134
          Weight          =   400
@@ -91,7 +82,7 @@ Begin VB.Form ruleWindow
    Begin VB.CommandButton Command2 
       Caption         =   "更新规则"
       BeginProperty Font 
-         Name            =   "微软雅黑"
+         Name            =   "宋体"
          Size            =   10.5
          Charset         =   134
          Weight          =   400
@@ -107,7 +98,7 @@ Begin VB.Form ruleWindow
    End
    Begin VB.TextBox location 
       BeginProperty Font 
-         Name            =   "微软雅黑"
+         Name            =   "宋体"
          Size            =   12
          Charset         =   134
          Weight          =   400
@@ -124,7 +115,7 @@ Begin VB.Form ruleWindow
    Begin VB.CommandButton Command1 
       Caption         =   "添加规则"
       BeginProperty Font 
-         Name            =   "微软雅黑"
+         Name            =   "宋体"
          Size            =   10.5
          Charset         =   134
          Weight          =   400
@@ -149,7 +140,7 @@ Begin VB.Form ruleWindow
          SubFormatType   =   1
       EndProperty
       BeginProperty Font 
-         Name            =   "微软雅黑"
+         Name            =   "宋体"
          Size            =   12
          Charset         =   134
          Weight          =   400
@@ -165,7 +156,7 @@ Begin VB.Form ruleWindow
    End
    Begin VB.ListBox ruleList 
       BeginProperty Font 
-         Name            =   "微软雅黑"
+         Name            =   "宋体"
          Size            =   12
          Charset         =   134
          Weight          =   400
@@ -173,7 +164,7 @@ Begin VB.Form ruleWindow
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   2580
+      Height          =   2460
       ItemData        =   "ruleWindow.frx":76115
       Left            =   120
       List            =   "ruleWindow.frx":76117
@@ -184,7 +175,7 @@ Begin VB.Form ruleWindow
    Begin VB.Label Label2 
       Caption         =   "归属地："
       BeginProperty Font 
-         Name            =   "微软雅黑"
+         Name            =   "宋体"
          Size            =   12
          Charset         =   134
          Weight          =   400
@@ -201,7 +192,7 @@ Begin VB.Form ruleWindow
    Begin VB.Label Label1 
       Caption         =   "号码："
       BeginProperty Font 
-         Name            =   "微软雅黑"
+         Name            =   "宋体"
          Size            =   12
          Charset         =   134
          Weight          =   400
@@ -314,8 +305,7 @@ End Sub
 Private Sub export_Click()
    ruleFileDialog.Filter = "*.txt"
    ruleFileDialog.ShowSave
-    If ruleFileDialog.fileName <> "" Then
-
+   If ruleFileDialog.fileName <> "" Then
        Open numberFilter.addSufix(ruleFileDialog.fileName) For Output As #1
        Open Environ("APPDATA") & "\numberFilter.txt" For Input As #2   ' 打开输入文件。
        Do While Not EOF(2)
@@ -324,7 +314,6 @@ Private Sub export_Click()
           Print #1, a
          End If
        Loop
-       
        Close #2
        Close #1
     MsgBox "导出成功，文件路径为 " & numberFilter.addSufix(ruleFileDialog.fileName)
@@ -333,7 +322,7 @@ End Sub
 
 
 Private Sub exportRule_Click()
- ruleFileDialog.Filter = "*.txt"
+ ruleFileDialog.Filter = "号码导入文件|*.txt"
    ruleFileDialog.ShowSave
     If ruleFileDialog.fileName <> "" Then
 
@@ -419,15 +408,22 @@ Private Sub import_Click()
 End Sub
 
 Private Sub importRule_Click()
+   ruleFileDialog.Filter = "号码导入文件|*.txt"
    ruleFileDialog.ShowOpen
     If ruleFileDialog.fileName <> "" Then
        '开始处理数据
        Open ruleFileDialog.fileName For Input As #1
-       Open Environ("APPDATA") & "\numberFilter.txt" For Output As #2  ' 打开输出文件。
+       
+       Open Environ("APPDATA") & "\numberFilter.txt" For Append As #2  ' 打开输出文件。
        Do While Not EOF(1)
+       
          Line Input #1, a '读整行的数据
-         If Trim(a) <> "" Then
-          Print #2, a
+         If contains(rulesArray, a) Then
+           MsgBox ("规则" & a & " 已经存在")
+         Else
+            If Trim(a) <> "" Then
+             Print #2, a
+            End If
          End If
        Loop
        
@@ -450,6 +446,18 @@ Private Sub importRule_Click()
         MsgBox "规则导入成功"
     End If
 End Sub
+
+Function contains(ruleArray, element) As Boolean
+contains = False
+   For Each rule In ruleArray
+     If rule = Trim(element) Then
+      contains = True
+      Exit For
+     End If
+   Next
+   
+End Function
+
 
 Private Sub ruleList_Click()
   Dim reg As RegExp
